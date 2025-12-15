@@ -91,7 +91,9 @@ require_once VIEWS_PATH . 'layouts/header.php';
             <h3 class="text-xl font-bold text-gray-800 mb-4">
                 <i class="fas fa-chart-pie mr-2"></i>Distribución de Cartera
             </h3>
-            <canvas id="carteraChart" height="250"></canvas>
+            <div style="height: 250px; position: relative;">
+                <canvas id="carteraChart"></canvas>
+            </div>
         </div>
         
         <!-- Gráfica de Morosidad -->
@@ -99,7 +101,9 @@ require_once VIEWS_PATH . 'layouts/header.php';
             <h3 class="text-xl font-bold text-gray-800 mb-4">
                 <i class="fas fa-chart-bar mr-2"></i>Estado de Cartera
             </h3>
-            <canvas id="morosidadChart" height="250"></canvas>
+            <div style="height: 250px; position: relative;">
+                <canvas id="morosidadChart"></canvas>
+            </div>
         </div>
     </div>
     
