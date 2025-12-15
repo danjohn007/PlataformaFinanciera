@@ -24,9 +24,9 @@
     <!-- Custom Styles -->
     <style>
         :root {
-            --color-primary: <?php echo $config['color_primario'] ?? '#1e40af'; ?>;
-            --color-secondary: <?php echo $config['color_secundario'] ?? '#3b82f6'; ?>;
-            --color-accent: <?php echo $config['color_acento'] ?? '#06b6d4'; ?>;
+            --color-primary: <?php echo htmlspecialchars($config['color_primario'] ?? '#1e40af'); ?>;
+            --color-secondary: <?php echo htmlspecialchars($config['color_secundario'] ?? '#3b82f6'); ?>;
+            --color-accent: <?php echo htmlspecialchars($config['color_acento'] ?? '#06b6d4'); ?>;
         }
         
         .btn-primary {

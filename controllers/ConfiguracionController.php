@@ -118,37 +118,47 @@ class ConfiguracionController extends BaseController {
                 if (isset($_FILES['logo']) && $_FILES['logo']['error'] === UPLOAD_ERR_OK) {
                     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
                     $fileType = $_FILES['logo']['type'];
+                    $maxFileSize = 2 * 1024 * 1024; // 2MB
                     
-                    if (!in_array($fileType, $allowedTypes)) {
+                    // Validar tamaño de archivo
+                    if ($_FILES['logo']['size'] > $maxFileSize) {
+                        $message = 'El archivo es demasiado grande. Tamaño máximo: 2MB';
+                        $messageType = 'error';
+                    } elseif (!in_array($fileType, $allowedTypes)) {
                         $message = 'Tipo de archivo no permitido. Solo se permiten JPG, PNG, GIF y SVG';
                         $messageType = 'error';
                     } else {
                         $uploadDir = UPLOADS_PATH . 'logos/';
                         if (!is_dir($uploadDir)) {
-                            mkdir($uploadDir, 0755, true);
+                            if (!mkdir($uploadDir, 0755, true)) {
+                                $message = 'Error al crear el directorio de subida';
+                                $messageType = 'error';
+                            }
                         }
                         
-                        $extension = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
-                        $filename = 'logo_' . time() . '.' . $extension;
-                        $uploadPath = $uploadDir . $filename;
-                        
-                        if (move_uploaded_file($_FILES['logo']['tmp_name'], $uploadPath)) {
-                            $logoUrl = '/uploads/logos/' . $filename;
+                        if (!isset($messageType) || $messageType !== 'error') {
+                            $extension = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
+                            $filename = 'logo_' . time() . '.' . $extension;
+                            $uploadPath = $uploadDir . $filename;
                             
-                            // Actualizar en base de datos
-                            $this->db->query("UPDATE configuracion SET logo_url = ? WHERE id = 1", [$logoUrl]);
-                            
-                            // Registrar en auditoría
-                            $this->db->query("
-                                INSERT INTO auditoria (usuario_id, accion, tabla_afectada, registro_id) 
-                                VALUES (?, 'Actualización de logo', 'configuracion', 1)
-                            ", [$user['id']]);
-                            
-                            $message = 'Logo actualizado correctamente';
-                            $messageType = 'success';
-                        } else {
-                            $message = 'Error al subir el archivo';
-                            $messageType = 'error';
+                            if (move_uploaded_file($_FILES['logo']['tmp_name'], $uploadPath)) {
+                                $logoUrl = '/uploads/logos/' . $filename;
+                                
+                                // Actualizar en base de datos
+                                $this->db->query("UPDATE configuracion SET logo_url = ? WHERE id = 1", [$logoUrl]);
+                                
+                                // Registrar en auditoría
+                                $this->db->query("
+                                    INSERT INTO auditoria (usuario_id, accion, tabla_afectada, registro_id) 
+                                    VALUES (?, 'Actualización de logo', 'configuracion', 1)
+                                ", [$user['id']]);
+                                
+                                $message = 'Logo actualizado correctamente';
+                                $messageType = 'success';
+                            } else {
+                                $message = 'Error al subir el archivo';
+                                $messageType = 'error';
+                            }
                         }
                     }
                 } else {
