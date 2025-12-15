@@ -1,0 +1,56 @@
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos de configuración local
+config/local.php
+.env
+.env.local
+
+# Archivos temporales
+/tmp/*
+*.tmp
+*.log
+
+# Dependencias (si se agregan en el futuro)
+/vendor/
+node_modules/
+
+# Archivos subidos por usuarios (mantener estructura de directorios)
+/uploads/logos/*
+!/uploads/logos/.gitkeep
+/uploads/documents/*
+!/uploads/documents/.gitkeep
+/uploads/qr_codes/*
+!/uploads/qr_codes/.gitkeep
+
+# Archivos de caché
+/cache/*
+*.cache
+
+# Archivos de backup
+*.sql.backup
+*.bak
+backup/
+
+# Archivos de test (excepto test_connection.php que es parte del sistema)
+tests/output/
+
+# Archivos de compilación
+*.compiled
+
+# Archivos sensibles
+credentials.txt
+passwords.txt
+
+# Reportes generados
+/reportes/*.pdf
+/reportes/*.xlsx
