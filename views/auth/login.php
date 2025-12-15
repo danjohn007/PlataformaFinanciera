@@ -5,12 +5,35 @@ $config = $stmt->fetch() ?: [];
 require_once VIEWS_PATH . 'layouts/header.php';
 ?>
 
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
+<style>
+    .login-gradient {
+        background: linear-gradient(135deg, <?php echo htmlspecialchars($config['color_primario'] ?? '#1e40af'); ?>, <?php echo htmlspecialchars($config['color_secundario'] ?? '#3b82f6'); ?>);
+    }
+    
+    .login-btn {
+        background-color: <?php echo htmlspecialchars($config['color_primario'] ?? '#1e40af'); ?>;
+    }
+    
+    .login-btn:hover {
+        background-color: <?php echo htmlspecialchars($config['color_secundario'] ?? '#3b82f6'); ?>;
+    }
+    
+    .login-focus:focus {
+        border-color: <?php echo htmlspecialchars($config['color_primario'] ?? '#1e40af'); ?>;
+        ring-color: <?php echo htmlspecialchars($config['color_primario'] ?? '#1e40af'); ?>;
+    }
+</style>
+
+<div class="min-h-screen flex items-center justify-center login-gradient">
     <div class="max-w-md w-full bg-white rounded-xl shadow-2xl p-8">
         <div class="text-center mb-8">
-            <i class="fas fa-landmark text-6xl text-blue-600 mb-4"></i>
+            <?php if (!empty($config['logo_url'])): ?>
+                <img src="<?php echo BASE_URL . $config['logo_url']; ?>" alt="Logo" class="h-20 mx-auto mb-4">
+            <?php else: ?>
+                <i class="fas fa-landmark text-6xl mb-4" style="color: <?php echo htmlspecialchars($config['color_primario'] ?? '#1e40af'); ?>;"></i>
+            <?php endif; ?>
             <h1 class="text-3xl font-bold text-gray-800 mb-2">Bienvenido</h1>
-            <p class="text-gray-600"><?php echo $config['nombre_sitio'] ?? SITE_NAME; ?></p>
+            <p class="text-gray-600"><?php echo htmlspecialchars($config['nombre_sitio'] ?? SITE_NAME); ?></p>
         </div>
         
         <?php if (!empty($error)): ?>
@@ -30,7 +53,7 @@ require_once VIEWS_PATH . 'layouts/header.php';
                     id="username" 
                     name="username" 
                     required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 login-focus focus:border-transparent"
                     placeholder="Ingrese su usuario o email"
                 >
             </div>
@@ -44,14 +67,14 @@ require_once VIEWS_PATH . 'layouts/header.php';
                     id="password" 
                     name="password" 
                     required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 login-focus focus:border-transparent"
                     placeholder="Ingrese su contraseña"
                 >
             </div>
             
             <button 
                 type="submit" 
-                class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-200"
+                class="w-full login-btn text-white font-bold py-3 px-4 rounded-lg transition duration-200"
             >
                 <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
             </button>
