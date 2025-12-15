@@ -1,0 +1,49 @@
+# Habilitar RewriteEngine para URLs amigables
+RewriteEngine On
+
+# Establecer directorio base automáticamente
+RewriteBase /
+
+# Redirigir todo a index.php excepto archivos y directorios existentes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+# Configuración de seguridad
+<IfModule mod_headers.c>
+    # Prevenir clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Prevenir MIME type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Habilitar XSS protection
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Ocultar versión de PHP
+<IfModule mod_headers.c>
+    Header unset X-Powered-By
+</IfModule>
+
+# Configuración de caché para assets estáticos
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# Proteger archivos sensibles
+<FilesMatch "^(config\.php|database\.php|\.env)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Comprimir contenido
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+</IfModule>
