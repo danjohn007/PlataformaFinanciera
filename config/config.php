@@ -9,8 +9,8 @@ defined('BASE_PATH') or exit('Acceso denegado');
 
 // Configuración de Base de Datos
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'caja_pf');
-define('DB_USER', 'caja_pf');
+define('DB_NAME', 'residenc_financiero');
+define('DB_USER', 'residenc_financiero');
 define('DB_PASS', 'Danjohn007!');
 define('DB_CHARSET', 'utf8mb4');
 
