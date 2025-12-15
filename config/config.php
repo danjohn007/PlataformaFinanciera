@@ -9,9 +9,9 @@ defined('BASE_PATH') or exit('Acceso denegado');
 
 // Configuración de Base de Datos
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'plataforma_financiera');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_NAME', 'caja_pf');
+define('DB_USER', 'caja_pf');
+define('DB_PASS', 'Danjohn007!');
 define('DB_CHARSET', 'utf8mb4');
 
 // Configuración de Zona Horaria
