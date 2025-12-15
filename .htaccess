@@ -1,8 +1,9 @@
 # Habilitar RewriteEngine para URLs amigables
 RewriteEngine On
 
-# Establecer directorio base automáticamente
-RewriteBase /
+# El directorio base se detecta automáticamente
+# Si necesita configurarlo manualmente, descomente y ajuste la siguiente línea:
+# RewriteBase /ruta/de/su/aplicacion/
 
 # Redirigir todo a index.php excepto archivos y directorios existentes
 RewriteCond %{REQUEST_FILENAME} !-f
